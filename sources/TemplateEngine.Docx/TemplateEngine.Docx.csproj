@@ -2,14 +2,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<DebugType>Full</DebugType>
-	<Version>1.1.5</Version>
-	<Authors>AIVolkov, Eric White</Authors>
+	<Version>1.2.0</Version>
+	<Authors>AIVolkov, Eric White, João Vitor</Authors>
 	<Copyright></Copyright>
 	<Company>AIVolkov</Company>
 	<Description>Smart template engine for generating Word docx documents on the server-side with a human-created Word templates, based on content controls Word feature</Description>
 	<PackageProjectUrl>http://unit6.ru/template-engine</PackageProjectUrl>
 	<PackageLicenseUrl>http://opensource.org/licenses/ms-pl</PackageLicenseUrl>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>	
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<RepositoryUrl>https://github.com/jvitor83/TemplateEngine.Docx</RepositoryUrl>
+	<AssemblyVersion>1.2.0.0</AssemblyVersion>
+	<FileVersion>1.2.0.0</FileVersion>
+	<AssemblyName>TemplateEngine.Docx</AssemblyName>
+	<PackageId>Jvitor83.TemplateEngine.Docx</PackageId>	
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.7.2" />

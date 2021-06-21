@@ -139,6 +139,24 @@ namespace TemplateEngine.Docx
 			}
 		}
 
+		public static string SdtTitleName(this XElement sdt)
+		{
+			if (sdt.Name != W.sdt) return null;
+
+			try
+			{
+				return sdt
+					.Element(W.sdtPr)
+					.Element(W.alias)
+					.Attribute(W.val)
+					.Value;
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
 		public static void ReplaceNewLinesWithBreaks(XElement xElem)
 		{
 			if (xElem == null) return;

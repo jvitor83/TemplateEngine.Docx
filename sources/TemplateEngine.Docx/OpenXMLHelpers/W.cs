@@ -13,6 +13,7 @@ namespace TemplateEngine.Docx
         public static XName sdt = w + "sdt";
         public static XName sdtPr = w + "sdtPr";
         public static XName tag = w + "tag";
+        public static XName alias = w + "alias";
         public static XName val = w + "val";
         public static XName sdtContent = w + "sdtContent";
         public static XName tbl = w + "tbl";

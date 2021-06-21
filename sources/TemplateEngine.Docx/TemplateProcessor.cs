@@ -13,7 +13,8 @@ namespace TemplateEngine.Docx
     public class TemplateProcessor : IDisposable
     {
 	    private readonly WordDocumentContainer _wordDocument;
-	    private bool _isNeedToRemoveContentControls;
+		private ContentControlSearchEnum _contentControlSearchStrategy;
+		private bool _isNeedToRemoveContentControls;
 	    private bool _isNeedToNoticeAboutErrors;
 
 	    public XDocument Document { get { return _wordDocument.MainDocumentPart; } }
@@ -83,13 +84,20 @@ namespace TemplateEngine.Docx
 			_wordDocument = new WordDocumentContainer(templateSource, stylesPart, numberingPart);
 		}
 
-	    public TemplateProcessor SetRemoveContentControls(bool isNeedToRemove)
+	    public TemplateProcessor SetContentControlSearchStrategy(ContentControlSearchEnum contentControlSearchStrategy)
 	    {
-		    _isNeedToRemoveContentControls = isNeedToRemove;
+			_contentControlSearchStrategy = contentControlSearchStrategy;
 		    return this;
 	    }
 
-	    public TemplateProcessor SetNoticeAboutErrors(bool isNeedToNotice)
+
+		public TemplateProcessor SetRemoveContentControls(bool isNeedToRemove)
+		{
+			_isNeedToRemoveContentControls = isNeedToRemove;
+			return this;
+		}
+
+		public TemplateProcessor SetNoticeAboutErrors(bool isNeedToNotice)
 	    {
 			_isNeedToNoticeAboutErrors = isNeedToNotice;
 		    return this;
@@ -99,7 +107,8 @@ namespace TemplateEngine.Docx
 		{
 			var processor = new ContentProcessor(
 				new ProcessContext(_wordDocument))
-				.SetRemoveContentControls(_isNeedToRemoveContentControls);
+				.SetRemoveContentControls(_isNeedToRemoveContentControls)
+				.SetContentControlSearchStrategy(_contentControlSearchStrategy);
 
 			var processResult = processor.FillContent(Document.Root.Element(W.body), content);
 

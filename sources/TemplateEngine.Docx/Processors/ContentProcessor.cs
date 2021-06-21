@@ -106,13 +106,49 @@ namespace TemplateEngine.Docx.Processors
 		{
 			return FillContent(content, new List<IContentItem>{data});
 		}
-		private IEnumerable<XElement> FindContentControls(XElement content, string tagName)
-		{
-            return content
-				//top level content controls
-				.FirstLevelDescendantsAndSelf(W.sdt)
-				//with specified tagName
-				.Where(sdt => tagName == sdt.SdtTagName());
+
+		
+
+		public ContentControlSearchEnum ContentControlSearch { get; private set; }
+
+		public ContentProcessor SetContentControlSearchStrategy(ContentControlSearchEnum searchStrategy)
+        {
+			ContentControlSearch = searchStrategy;
+			return this;
 		}
+
+        private IEnumerable<XElement> FindContentControls(XElement content, string tagName)
+		{
+			var descendants = content
+				//top level content controls
+				.FirstLevelDescendantsAndSelf(W.sdt);
+
+			if (ContentControlSearch == ContentControlSearchEnum.TitleAndTag)
+			{
+				return descendants.Where(sdt =>
+					tagName == sdt.SdtTagName() || tagName == sdt.SdtTitleName()
+				);
+			}
+			else if (ContentControlSearch == ContentControlSearchEnum.Title)
+			{
+				return descendants.Where(sdt => tagName == sdt.SdtTitleName());
+			}
+			else if (ContentControlSearch == ContentControlSearchEnum.Tag)
+			{
+				return descendants.Where(sdt => tagName == sdt.SdtTagName());
+			}
+
+			// impossible to get here
+			throw new System.InvalidOperationException();
+		}
+	}
+	public enum ContentControlSearchEnum
+	{
+		Tag,
+		/// <summary>
+		/// Cross-reference at LibreOffice
+		/// </summary>
+		Title,
+		TitleAndTag,
 	}
 }
